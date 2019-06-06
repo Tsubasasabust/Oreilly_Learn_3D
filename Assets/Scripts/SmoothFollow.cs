@@ -27,7 +27,7 @@ public class SmoothFollow : MonoBehaviour
        currentHeight = Mathf.Lerp(currentHeight,
        wantedHeight,heightDamping * Time.deltaTime);
 
-       var currentRotation = Quaternion.EulerAngles(0,currentRotationAngle,0);
+       var currentRotation = Quaternion.Euler(0,currentRotationAngle,0);
 
        transform.position = target.position;
        transform.position -= currentRotation * Vector3.forward * distance;

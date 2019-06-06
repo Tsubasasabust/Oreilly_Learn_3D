@@ -5,15 +5,30 @@ using UnityEngine;
 public class InputManager : Singleton<InputManager>
 {
     public VirtualJoystick steering;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public float fireRate = 0.2f;
+    private ShipWeapons currentWeapons;
+    private bool isFiring = false;
+    public void SetWeapons(ShipWeapons weapons){
+        this.currentWeapons = weapons;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void RemoveWeapons(ShipWeapons weapons){
+        if(this.currentWeapons == weapons){
+            this.currentWeapons = null;
+        }
+    }
+    public void StartFiring(){
+        StartCoroutine(FireWeapons());
+    }
+    IEnumerator FireWeapons(){
+        isFiring = true;
+        while(isFiring){
+            if(this.currentWeapons != null){
+                currentWeapons.Fire();
+            }
+            yield return new WaitForSeconds(fireRate);
+        }
+    }
+    public void StopFiring(){
+        isFiring = false;
     }
 }
